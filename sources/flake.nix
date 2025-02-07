@@ -18,13 +18,20 @@
             ttfautohint
             nodejs
             python3
-            python3Packages.fontbakery
-            python3Packages.fonttools
+            uv
+            git  # Add git here
           ];
 
           shellHook = ''
             echo "Font development shell"
             echo "Python version: $(python3 --version)"
+
+            # Set up uv virtual environment
+            if [ ! -d ".venv" ]; then
+              uv venv .venv
+              uv pip install -r requirements.txt
+            fi
+            source .venv/bin/activate
           '';
         };
       });
